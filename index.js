@@ -4,8 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const shortid = require('shortid');
 const cors = require('cors');
-const mysql = require('mysql');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -23,19 +21,6 @@ app.use(cors({
 // Handle OPTIONS requests for preflight CORS checks
 app.options('/api/shorten', cors()); // Enable preflight requests for /api/shorten
 
-// Database connection
-const db = mysql.createConnection({
-    host: 'mysql.hostinger.com',
-    user: 'u321378971_url', // Your MySQL username
-    password: 'Mrinal@8888', // Your MySQL password
-    database: 'u321378971_link' // Your database name
-});
-
-db.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to MySQL Database');
-});
-
 // Handle POST request to shorten URL
 app.post('/api/shorten', (req, res) => {
     const { originalUrl } = req.body;
@@ -51,34 +36,10 @@ app.post('/api/shorten', (req, res) => {
     const baseUrl = 'https://indiatimesnow.online';
     const shortenedUrl = `${baseUrl}/${slug}`;
 
-    // Insert the slug and originalUrl into the database
-    const query = 'INSERT INTO links (slug, originalUrl) VALUES (?, ?)';
-    db.query(query, [slug, originalUrl], (err, result) => {
-        if (err) {
-            console.error('Database insertion error:', err);
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-        // Respond with the shortened URL
-        res.status(200).json({ shortenedUrl });
-    });
-});
+    // You can store the mapping of slug to originalUrl in a database if needed
 
-// Endpoint to redirect to the original URL
-app.get('/:slug', (req, res) => {
-    const slug = req.params.slug;
-
-    const query = 'SELECT originalUrl FROM links WHERE slug = ?';
-    db.query(query, [slug], (err, result) => {
-        if (err) {
-            console.error('Database query error:', err);
-            return res.status(500).send('Internal server error');
-        }
-        if (result.length > 0) {
-            res.redirect(result[0].originalUrl);
-        } else {
-            res.status(404).send('URL not found');
-        }
-    });
+    // Respond with the shortened URL
+    res.status(200).json({ shortenedUrl });
 });
 
 // Start the server
