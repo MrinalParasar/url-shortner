@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 // CORS middleware configuration
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Replace with your frontend URL
+    origin: 'https://indiatimesnow.online', // Replace with your frontend URL
     methods: ['GET', 'POST'], // Allow only specific methods
     allowedHeaders: ['Content-Type'], // Allow only specific headers
     credentials: true // Allow credentials such as cookies (if applicable)
