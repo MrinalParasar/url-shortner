@@ -25,7 +25,7 @@ app.options('/api/shorten', cors()); // Enable preflight requests for /api/short
 
 // Database connection
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'mysql.hostinger.com',
     user: 'u321378971_url', // Your MySQL username
     password: 'Mrinal@8888', // Your MySQL password
     database: 'u321378971_link' // Your database name
