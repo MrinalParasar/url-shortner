@@ -34,7 +34,7 @@ app.post('/api/shorten', (req, res) => {
     const slug = shortid.generate();
 
     // Assuming you have a domain where you want to generate the shortened link
-    const baseUrl = 'https://mrinalparasar.com';
+    const baseUrl = 'https://indiatimesnow.online';
     const shortenedUrl = `${baseUrl}/${slug}`;
 
     // You can store the mapping of slug to originalUrl in a database if needed
